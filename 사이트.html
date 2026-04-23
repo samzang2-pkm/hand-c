@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>손의 온도: 형태가 되기 전의 감정들</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f4f1ee; 
+            --text-main: #2c2c2c; /* 조금 더 깊은 다크 그레이 */
+            --accent-color: #8c7867; 
+            --white: #ffffff;
+            --soft-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Noto Sans KR', sans-serif; 
+            background-color: var(--bg-color); 
+            color: var(--text-main); 
+            line-height: 1.8; /* 가독성을 위해 상향 */
+            scroll-behavior: smooth;
+            word-break: keep-all; /* 한글 줄바꿈 자연스럽게 */
+        }
+
+        h1, h2, h3, .serif { font-family: 'Noto Serif KR', serif; letter-spacing: -0.02em; }
+
+        /* Navigation - 유리막 효과 추가 */
+        nav {
+            position: fixed; top: 0; width: 100%; height: 70px;
+            background: rgba(244, 241, 238, 0.85);
+            backdrop-filter: blur(10px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+        nav a {
+            margin: 0 15px; text-decoration: none; color: var(--text-main);
+            font-size: 0.9rem; font-weight: 500; transition: color 0.3s;
+        }
+        nav a:hover { color: var(--accent-color); }
+
+        /* Section Styling */
+        section { padding: 120px 20px; max-width: 1100px; margin: 0 auto; }
+        .center { text-align: center; }
+
+        /* Hero Section - 텍스트 가독성 강화 */
+        #home {
+            height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            background: linear-gradient(rgba(244,241,238,0.7), rgba(244,241,238,0.7)), 
+                        url('https://i.pinimg.com/736x/5a/b3/22/5ab3226530609fd16d674a68ac9f5d83.jpg') no-repeat center center/cover;
+            text-align: center;
+        }
+        #home h1 { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 20px; color: #1a1a1a; }
+        #home p { font-size: 1.1rem; color: #555; margin-bottom: 40px; font-weight: 300; }
+        
+        .keywords { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+        .keywords span { 
+            background: rgba(255,255,255,0.6); padding: 6px 16px; 
+            border-radius: 50px; font-size: 0.85rem; border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        /* About Section */
+        .intro-box { max-width: 700px; margin: 0 auto; }
+        .intro-box h2 { margin-bottom: 40px; font-size: 2rem; position: relative; padding-bottom: 15px; }
+        .intro-box h2::after {
+            content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 40px; height: 2px; background: var(--accent-color);
+        }
+        .intro-text { font-size: 1.1rem; color: #444; }
+        .question { font-size: 1.6rem; color: var(--accent-color); margin: 50px 0; font-weight: 700; line-height: 1.4; }
+
+        /* Exhibition Space - 카드 디자인 고도화 */
+        .space-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px; margin-top: 50px;
+        }
+        .space-card {
+            background: var(--white); padding: 50px 30px; border-radius: 15px;
+            box-shadow: var(--soft-shadow); transition: all 0.4s ease;
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+        .space-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+        .space-card h3 { color: var(--accent-color); margin-bottom: 10px; font-size: 0.9rem; letter-spacing: 0.1em; }
+        .space-card p { font-size: 1.2rem; font-weight: 700; font-family: 'Noto Serif KR'; }
+
+        /* Artworks Gallery - 이미지 비율 및 설명 최적화 */
+        .art-item {
+            display: flex; flex-wrap: wrap; margin-bottom: 150px; align-items: center; gap: 60px;
+        }
+        .art-item:nth-child(even) { flex-direction: row-reverse; }
+        .art-img { 
+            flex: 1.2; min-width: 320px; height: 450px; border-radius: 8px; overflow: hidden;
+            box-shadow: 20px 20px 60px rgba(0,0,0,0.05);
+        }
+        .art-img img { width: 100%; height: 100%; object-fit: cover; transition: scale 0.5s; }
+        .art-img:hover img { scale: 1.05; }
+        
+        .art-desc { flex: 1; min-width: 320px; }
+        .art-desc h3 { font-size: 1.8rem; margin-bottom: 25px; border-left: 4px solid var(--accent-color); padding-left: 20px; }
+        .art-desc p { color: #666; margin-bottom: 20px; }
+        .art-desc .message { 
+            display: inline-block; margin-top: 10px; padding-top: 15px;
+            border-top: 1px solid #ddd; font-weight: 500; color: var(--accent-color); font-style: italic;
+        }
+
+        /* Info Panel */
+        .info-panel {
+            background: #ece7e2; padding: 60px 40px; border-radius: 30px;
+        }
+        .robot-steps {
+            display: flex; justify-content: center; margin-top: 40px; flex-wrap: wrap; gap: 15px;
+        }
+        .step { 
+            background: var(--white); padding: 15px 25px; border-radius: 12px;
+            font-weight: 500; font-size: 0.95rem; box-shadow: var(--soft-shadow);
+        }
+
+        footer { text-align: center; padding: 60px 20px; font-size: 0.85rem; color: #999; border-top: 1px solid #eee; }
+
+        @media (max-width: 768px) {
+            .art-item { gap: 30px; margin-bottom: 80px; }
+            .art-img { height: 300px; }
+            #home h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#home">메인</a>
+        <a href="#about">전시 소개</a>
+        <a href="#space">공간</a>
+        <a href="#artworks">작품</a>
+        <a href="#info">안내</a>
+    </nav>
+
+    <section id="home">
+        <h1 class="serif">손의 온도:<br>형태가 되기 전의 감정들</h1>
+        <p>“형태는 완성된 결과가 아니라, 감정이 지나간 흔적이다.”</p>
+        <div class="keywords">
+            <span>#감정의물질성</span> <span>#찰흙</span> <span>#흔적</span> <span>#미완성</span> 
+            <span>#손자국</span> <span>#완벽하지않은아름다움</span>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="intro-box center">
+            <h2>전시 소개</h2>
+            <div class="intro-text">
+                <p>현대 사회에서 우리는 감정을 빠르게 소비하고 관리 대상으로 인식하지만,<br>
+                실제 인간의 감정은 끊임없이 형태를 바꾸며 우리 내면에 머뭅니다.</p>
+                <p class="question serif">“감정은 사라지는 것일까,<br>아니면 형태를 바꾸는 것일까?”</p>
+                <p>본 전시는 <strong>'찰흙'</strong>이라는 가변적인 매체를 통해 감정의 무게를 시각화합니다.<br>
+                갈라지고 짓눌린 형태들은 결과물이 아닌, 우리가 통과해온 '과정' 그 자체입니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="space">
+        <h2 class="center serif">전시 공간</h2>
+        <div class="space-grid">
+            <div class="space-card center"><h3>ROOM 1</h3><p>눌린 기억</p></div>
+            <div class="space-card center"><h3>ROOM 2</h3><p>늘어나는 시간</p></div>
+            <div class="space-card center"><h3>ROOM 3</h3><p>균열의 표면</p></div>
+            <div class="space-card center"><h3>ROOM 4</h3><p>남겨진 손</p></div>
+        </div>
+    </section>
+
+    <section id="artworks">
+        <h2 class="center serif" style="margin-bottom: 80px;">작품 상세</h2>
+        
+        <div class="art-item">
+            <div class="art-img"><img src="./44.jpg" alt="눌린 기억"></div>
+            <div class="art-desc">
+                <h3>작품 1 「눌린 기억」</h3>
+                <p>반복적으로 눌리고 뭉개지며 원래의 모습을 잃어버린 찰흙의 덩어리입니다. 억눌려온 기억이 어떻게 우리 내면의 형태를 변형시키는지 보여줍니다.</p>
+                <span class="message">“감정은 사라지지 않고, 형태만 변한다.”</span>
+            </div>
+        </div>
+
+        <div class="art-item">
+            <div class="art-img"><img src="./33.jpg" alt="늘어나는 시간"></div>
+            <div class="art-desc">
+                <h3>작품 2 「늘어나는 시간」</h3>
+                <p>길게 늘어져 끊어지기 직전의 찰흙을 통해 기다림의 고통과 인내를 시각화했습니다. 시간의 흐름에 따라 희미해지는 감정의 궤적을 담았습니다.</p>
+                <span class="message">“기다림은 사라짐이 아니라 변형이다.”</span>
+            </div>
+        </div>
+
+        <div class="art-item">
+            <div class="art-img"><img src="./11.jpg" alt="균열의 표면"></div>
+            <div class="art-desc">
+                <h3>작품 3 「균열의 표면」</h3>
+                <p>건조하게 갈라진 겉면과 그 틈 사이로 보이는 아직 굳지 않은 내부를 대조시켰습니다. 단단한 척하지만 여전히 위태로운 우리의 마음을 닮았습니다.</p>
+                <span class="message">“무너진 것처럼 보여도, 아직 끝난 것은 아니다.”</span>
+            </div>
+        </div>
+
+        <div class="art-item">
+            <div class="art-img"><img src="./22.jpg" alt="남겨진 손"></div>
+            <div class="art-desc">
+                <h3>작품 4 「남겨진 손」</h3>
+                <p>누군가 머물다 간 자리에 깊게 패인 손자국들을 표현합니다. 관계가 끝난 뒤에도 우리 영혼에 선명하게 남아있는 타인의 흔적을 상징합니다.</p>
+                <span class="message">“사람은 사라져도, 닿았던 흔적은 남는다.”</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="info">
+        <div class="info-panel">
+            <h2 class="center serif">이용 안내</h2>
+            <p class="center" style="margin-top: 20px;">각 전시실에는 작품의 감정선을 손동작으로 재현하는 로봇이 배치되어 있습니다.</p>
+            <div class="robot-steps">
+                <div class="step">01. 눌린 기억</div>
+                <div class="step">02. 늘어나는 시간</div>
+                <div class="step">03. 균열의 표면</div>
+                <div class="step">04. 남겨진 손</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 캡스톤 디자인 - 손의 온도 전시 프로젝트<br>Designed for Emotional Experience</p>
+    </footer>
+
+</body>
+</html>
